@@ -33,7 +33,7 @@
 │   │   ├── schemas/query.py         # Pydantic 请求/响应模型
 │   │   └── utils/sql_utils.py       # SQL 安全校验（白名单模式）
 │   ├── logs/                        # 日志文件
-│   └── requirement.txt              # Python 依赖
+│   └── requirements.txt              # Python 依赖
 │
 └── frontend/
     ├── src/
