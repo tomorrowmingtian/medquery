@@ -59,9 +59,11 @@ def nlp_to_sql(text: str) -> str:
 2. 只返回纯 SQL，不要加解释、注释或 markdown 标记。
 3. 若问题无法用现有表结构回答，返回：SELECT '无法回答该问题，请检查表结构' AS message;
 4. 若涉及修改或删除数据，返回：SELECT '仅支持查询操作' AS message;
+5. 对疾病名称、药品名称、检查项目等文本字段进行条件筛选时，必须使用 LIKE '%关键词%' 进行模糊匹配，禁止使用精确等值（=）。例如查询糖尿病相关数据应写 WHERE disease_name LIKE '%糖尿病%' 而非 WHERE disease_name = '糖尿病'。
 
 ## 注意事项
-- 用户输入为中文，需要将中文条件映射到对应英文字段（如"糖尿病"可能对应 disease_name 或 diagnosis 等字段）。
+- 用户输入为中文，需要将中文条件映射到对应英文字段（如"糖尿病"对应 disease_name 字段）。
+- 人名查询使用 LIKE '姓%' 前缀匹配（如"姓张的患者"→ WHERE name LIKE '张%'）。
 - 合理使用聚合函数（COUNT / SUM / AVG）、分组（GROUP BY）、排序（ORDER BY）和分页（LIMIT）。
 - 涉及年龄、日期范围等条件时注意字段类型，确保 SQL 语法正确。
 - 字段别名建议使用中文（AS 'xxx'），便于前端展示。
